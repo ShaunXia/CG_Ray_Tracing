@@ -547,8 +547,7 @@ function rayCastSpheres(context) {
         var closestT = Number.MAX_VALUE; // init the closest t value
         var c = new Color(0,0,0,0); // init the pixel color
         var isect = {}; // init the intersection
-        //
-        console.log("number of spheres: " + n);
+        //console.log("number of spheres: " + n);
 
         // Loop over the pixels and spheres, intersecting them
         var wx = WIN_LEFT; // init world pixel xcoord
@@ -671,8 +670,7 @@ const WIN_Z = 0;
 const WIN_LEFT = 0; const WIN_RIGHT = 1;
 const WIN_BOTTOM = 0; const WIN_TOP = 1; 
 const INPUT_SPHERES_URL = 
-    "https://pages.github.ncsu.edu/sxia4/cg/spheres.json"
-    //"https://ncsucgclass.github.io/prog1/spheres.json";
+    "https://pages.github.ncsu.edu/sxia4/cg/spheres.json";
     //"https://pages.github.ncsu.edu/bwatson/introcg-prog1/spheres.json";
 const INPUT_LIGHTS_URL = 
     "https://pages.github.ncsu.edu/sxia4/cg/lights.json";
