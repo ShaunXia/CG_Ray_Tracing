@@ -691,13 +691,13 @@ function main() {
     //drawRandPixels(context);
       // shows how to draw pixels
     
-    //drawRandPixelsInInputSpheres(context);
+    drawRandPixelsInInputSpheres(context);
       // shows how to draw pixels and read input file
       
     //drawInputSpheresUsingArcs(context);
       // shows how to read input file, but not how to draw pixels
       
-    rayCastSpheres(context); 
+    //rayCastSpheres(context); 
     
     //framelessRayCastSpheres(context);
 }
