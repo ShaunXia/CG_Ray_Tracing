@@ -387,7 +387,7 @@ function drawRandPixelsInInputSpheres(context) {
                 //console.log("y: "+Math.round(h*inputSpheres[s].y));
             } // end for pixels in sphere
         } // end for spheres
-        context.putImagedata(imagedata, 0, 0);
+        context.putImageData(imagedata, 0, 0);
     } // end if spheres found
 } // end draw rand pixels in input spheres
 
