@@ -770,7 +770,7 @@ function rayCastSpheres(context) {
                     }
                 } // end for spheres
 
-                
+
                 drawPixel(imagedata,x,y,c);
                 wx += wxd; 
                 //console.log(""); // blank per pixel
@@ -896,13 +896,13 @@ function main() {
     //drawRandPixels(context);
       // shows how to draw pixels
     
-    drawRandPixelsInInputSpheres(context);
+    //drawRandPixelsInInputSpheres(context);
       // shows how to draw pixels and read input file
       
-    drawInputSpheresUsingArcs(context);
+    //drawInputSpheresUsingArcs(context);
       // shows how to read input file, but not how to draw pixels
       
-    //rayCastSpheres(context); 
+    rayCastSpheres(context); 
     
     //framelessRayCastSpheres(context);
 }
