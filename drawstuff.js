@@ -665,7 +665,7 @@ function shadeTriIsect(isect,isectSphere,lights,triangles,spheres) {
                         if (integral_isect.exists) // there is an intersect
                             if (integral_isect.t < closestT) { // it is the closest yet
                                 closestT = integral_isect.t; // record closest t yet
-                                integral_c = shadeIsect(integral_isect,integral_s,inputLights,inputSpheres); 
+                                integral_c = shadeIsect(integral_isect,integral_s,lights,spheres); 
                             } // end if closest yet
                     } // end for spheres
 
