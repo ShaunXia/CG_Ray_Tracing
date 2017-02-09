@@ -14,28 +14,28 @@
     "triangles": [[0,1,2]]
   },
   {
-    "material": {"ambient": [0,0,0], "diffuse": [0.6,0.6,0.6], "specular": [0.3,0.3,0.3], "n": 11, "alpha": 0.9, "texture": "abe.png"},
+    "material": {"ambient": [0.5,0.5,0.5], "diffuse": [0.6,0.6,0.6], "specular": [0.3,0.3,0.3], "n": 11, "alpha": 0.9, "texture": "abe.png"},
     "vertices": [[0, 1, 1],[0, 0, 1],[1, 1, 1]],
     "normals": [[0, 0, 1],[0, 0,1],[0, 0,1]],
     "back": [[0,0], [0.5,1], [1,0]],
     "triangles": [[0,1,2]]
   },
   {
-    "material": {"ambient": [0,0,0], "diffuse": [0.6,0.6,0.6], "specular": [0.3,0.3,0.3], "n": 11, "alpha": 0.9, "texture": "abe.png"},
+    "material": {"ambient": [0.5,0.5,0.5], "diffuse": [0.6,0.6,0.6], "specular": [0.3,0.3,0.3], "n": 11, "alpha": 0.9, "texture": "abe.png"},
     "vertices": [[0, 0, 1],[1, 0, 1],[1, 1, 1]],
     "normals": [[0, 0, 1],[0, 0,1],[0, 0,1]],
     "uvs": [[0,0], [0.5,1], [1,0]],
     "triangles": [[0,1,2]]
   },
   {
-    "material": {"ambient": [0.1,0.1,0.1], "diffuse": [0.6,0.6,0.6], "specular": [0.3,0.3,0.3], "n": 11, "alpha": 0.9, "texture": "abe.png"},
+    "material": {"ambient": [0.5,0.5,0.5], "diffuse": [0.6,0.6,0.6], "specular": [0.3,0.3,0.3], "n": 11, "alpha": 0.9, "texture": "abe.png"},
     "vertices": [[0, 1, 0],[0, 1, 1],[1, 1, 1]],
     "normals": [[0, 1, 0],[0, 1,0],[0, 1,0]],
     "top": [[0,0], [0.5,1], [1,0]],
     "triangles": [[0,1,2]]
   },
   {
-    "material": {"ambient": [0.1,0.1,0.1], "diffuse": [0.6,0.6,0.6], "specular": [0.3,0.3,0.3], "n": 11, "alpha": 0.9, "texture": "abe.png"},
+    "material": {"ambient": [0.5,0.5,0.5], "diffuse": [0.6,0.6,0.6], "specular": [0.3,0.3,0.3], "n": 11, "alpha": 0.9, "texture": "abe.png"},
     "vertices": [[0, 1, 0],[1, 1, 0],[1, 1, 1]],
     "normals": [[0, 1, 0],[0, 1,0],[0, 1,0]],
     "uvs": [[0,0], [0.5,1], [1,0]],
