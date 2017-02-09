@@ -601,7 +601,7 @@ function shadeTriIsect(isect,isectSphere,lights,triangles,spheres) {
                 c[1] += lights[l].ambient[1] * triangles.material.ambient[1]; // ambient term g
                 c[2] += lights[l].ambient[2] * triangles.material.ambient[2]; // ambient term b
                 
-            console.log(isect.xyz);
+            	//console.log(isect.xyz);
                 // check each other sphere to see if it occludes light
                 Lloc.set(0.5,1,-0.5);
                 // Lloc.set(lights[l].x,lights[l].y,lights[l].z);
@@ -756,10 +756,11 @@ function rayCastSpheres(context) {
 
 
 
-                for (var s=0; s<inputTriangles.length-1; s++) 
+                for (var s=0; s<inputTriangles.length; s++) 
                 {
                     for (var num_tri=0; num_tri<inputTriangles[s].triangles.length; num_tri++) 
                     {
+                    	console.log("Triangle:"+s);
                         tri_isect = rayTriangleIntersect([Eye, Dir], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][0]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][1]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][2]],1); 
                         if (tri_isect.exists) // there is an intersect
                             if (tri_isect.t < closestT) 
