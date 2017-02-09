@@ -7,11 +7,11 @@
     "triangles": [[0,1,2]]
   },
   {
-    "material": {"ambient": [0.1,0.1,0.1], "diffuse": [0.6,0.6,0.6], "specular": [0.3,0.3,0.3], "n":13, "alpha": 0.7, "texture": "billie.jpg"}, 
-    "vertices": [[0, 0, 0],[0, 1, 1],[0, 1, 1]],
-    "normals": [[0, 0, -1],[0, 0, -1],[0, 0,-1],[0, 0,-1]],
-    "uvs": [[0,0], [0,1], [1,1], [1,0]],
-    "triangles": [[0,1,2],[2,3,0]]
+    "material": {"ambient": [0.1,0.1,0.1], "diffuse": [0.6,0.6,0.6], "specular": [0.3,0.3,0.3], "n": 11, "alpha": 0.9, "texture": "abe.png"}, 
+    "vertices": [[0, 0, 0],[0, 0, 1],[0, 1, 1]],
+    "normals": [[0, 0, -1],[0, 0,-1],[0, 0,-1]],
+    "uvs": [[0,0], [0.5,1], [1,0]],
+    "triangles": [[0,1,2]]
   },
   {
     "material": {"ambient": [0.1,0.1,0.1], "diffuse": [0.0,0.6,0.0], "specular": [0.3,0.3,0.3], "n":15, "alpha": 0.5, "texture": false}, 
