@@ -747,6 +747,8 @@ function rayCastSpheres(context) {
                 c.change(0,0,0,255); // set pixel to background color
                 Dir.copy(Vector.subtract(new Vector(wx,wy,WIN_Z),Eye)); // set ray direction
 
+                var ts = 0;
+                var ss=0;
                 //Dir.toConsole("Dir: ");
                 for (var s=0; s<n; s++) {
                 // for (var s=0; s<1; s++) {
@@ -754,7 +756,7 @@ function rayCastSpheres(context) {
                     if (isect.exists) // there is an intersect
                         if (isect.t < closestS) { // it is the closest yet
                             closestS = isect.t; // record closest t yet
-
+                            ss=s;
                             //c = shadeIsect(isect,s,inputLights,inputSpheres); 
 
                         } // end if closest yet
@@ -774,6 +776,7 @@ function rayCastSpheres(context) {
                             { // it is the closest yet
                                 closestT = tri_isect.t; // record closest t yet
                                 // console.log(inputTriangles[s]);
+                                ts=s;
                                 
                                 // c = shadeTriIsect(tri_isect,num_tri,inputLights,inputTriangles[s],inputSpheres); 
 
@@ -784,9 +787,9 @@ function rayCastSpheres(context) {
 
                 if(closestS>closestT)
                 {
-                    c = shadeTriIsect(tri_isect,num_tri,inputLights,inputTriangles[s],inputSpheres); 
+                    c = shadeTriIsect(closestT,1,inputLights,inputTriangles[ts],inputSpheres); 
                 }else
-                    c = shadeIsect(isect,s,inputLights,inputSpheres); 
+                    c = shadeIsect(closestS,ss,inputLights,inputSpheres); 
 
                 drawPixel(imagedata,x,y,c);
                 wx += wxd; 
