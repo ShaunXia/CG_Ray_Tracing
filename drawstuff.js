@@ -760,7 +760,7 @@ function rayCastSpheres(context) {
                 {
                     for (var num_tri=0; num_tri<inputTriangles[s].triangles.length; num_tri++) 
                     {
-                    	console.log("Triangle:"+s);
+                    	//console.log("Triangle:"+s);
                         tri_isect = rayTriangleIntersect([Eye, Dir], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][0]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][1]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][2]],1); 
                         if (tri_isect.exists) // there is an intersect
                             if (tri_isect.t < closestT) 
@@ -768,7 +768,7 @@ function rayCastSpheres(context) {
                                 closestT = tri_isect.t; // record closest t yet
                                 // console.log(inputTriangles[s]);
                                 c = shadeTriIsect(tri_isect,num_tri,inputLights,inputTriangles[s],inputSpheres); 
-                                console.log(c);
+                                //console.log(c);
                             } // end if closest yet
                     }
                 } // end for spheres
