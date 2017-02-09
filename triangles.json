@@ -1,15 +1,15 @@
 [
   {
-    "material": {"ambient": [1,0.0,0], "diffuse": [0.6,0.6,0.6], "specular": [0,0,0], "n": 11, "alpha": 0.9, "texture": "abe.png"}, 
+    "material": {"ambient": [1,0.0,0], "diffuse": [0.6,0.6,0.6], "specular": [0,0,0], "n": 11, "alpha": 0.9, "texture": "abe.png"},
     "vertices": [[0, 0, 0],[0, 1, 0],[0, 1, 1]],
-    "normals": [[0, 0, -1],[0, 0,-1],[0, 0,-1]],
+    "normals": [[1, 0, 0],[1, 0, 0],[1, 0, 0]],
     "uvs": [[0,0], [0.5,1], [1,0]],
     "triangles": [[0,1,2]]
   },
   {
     "material": {"ambient": [1,0.0,0], "diffuse": [0.6,0.6,0.6], "specular": [0,0,0], "n": 11, "alpha": 0.9, "texture": "abe.png"},
     "vertices": [[0, 0, 0],[0, 0, 1],[0, 1, 1]],
-    "normals": [[0, 0, -1],[0, 0,-1],[0, 0,-1]],
+    "normals": [[1, 0, 0],[1, 0, 0],[1, 0, 0]],
     "uvs": [[0,0], [0.5,1], [1,0]],
     "triangles": [[0,1,2]]
   },
