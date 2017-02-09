@@ -510,14 +510,14 @@ function isLightOccluded(L,isectPos,isectSphere,spheres) {
 } // end is light occluded
 
 // color the passed intersection and sphere
-function shadeIsect(isect,sphereNum,lights,spheres) {
+function shadeIsect(isect,isectSphere,lights,spheres) {
     try {
-        if (   !(isect instanceof Object) || !(typeof(sphereNum) === "number") 
+        if (   !(isect instanceof Object) || !(typeof(isectSphere) === "number") 
             || !(lights instanceof Array) || !(spheres instanceof Array))
             throw "shadeIsect: bad parameter passed";
         else {
             var c = new Color(0,0,0,255); // init the sphere color to black
-            var sphere = spheres[sphereNum]; // sphere intersected by eye
+            var sphere = spheres[isectSphere]; // sphere intersected by eye
             // console.log("shading pixel");
 
             // add light for each source
@@ -537,7 +537,7 @@ function shadeIsect(isect,sphereNum,lights,spheres) {
                 // console.log("isect: "+isect.xyz.x+", "+isect.xyz.y+", "+isect.xyz.z);
                 
                 // if light isn't occluded
-                if (!isLightOccluded(L,isect.xyz,sphereNum,spheres)) {
+                if (!isLightOccluded(L,isect.xyz,isectSphere,spheres)) {
                     // console.log("no occlusion found");
                     
                     // add in the diffuse light
@@ -556,7 +556,7 @@ function shadeIsect(isect,sphereNum,lights,spheres) {
                     var specFactor = Math.max(0,Vector.dot(N,H)); 
                     if (specFactor > 0) {
                         var newSpecFactor = specFactor;
-                        for (var s=1; s<spheres[sphereNum].n; s++) // mult by itself if needed
+                        for (var s=1; s<spheres[isectSphere].n; s++) // mult by itself if needed
                             newSpecFactor *= specFactor;
                         c[0] += lights[l].specular[0] * sphere.specular[0] * newSpecFactor; // specular term
                         c[1] += lights[l].specular[1] * sphere.specular[1] * newSpecFactor; // specular term
@@ -728,7 +728,6 @@ function rayCastSpheres(context) {
         var n = inputSpheres.length; // the number of spheres
         var Dir = new Vector(0,0,0); // init the ray direction
         var closestT = Number.MAX_VALUE; // init the closest t value
-        var closestS = Number.MAX_VALUE;
         var c = new Color(0,0,0,0); // init the pixel color
         var isect = {}; // init the intersection
         //console.log("number of spheres: " + n);
@@ -741,8 +740,7 @@ function rayCastSpheres(context) {
         for (y=0; y<h; y++) {
             wx = WIN_LEFT; // init w
             for (x=0; x<h; x++) {
-                closestS = Number.MAX_VALUE; // no closest t for this pixel
-
+                closestT = Number.MAX_VALUE; // no closest t for this pixel
                 c.change(0,0,0,255); // set pixel to background color
                 Dir.copy(Vector.subtract(new Vector(wx,wy,WIN_Z),Eye)); // set ray direction
                 //Dir.toConsole("Dir: ");
@@ -750,7 +748,7 @@ function rayCastSpheres(context) {
                 // for (var s=0; s<1; s++) {
                     isect = raySphereIntersect([Eye,Dir],inputSpheres[s],1); 
                     if (isect.exists) // there is an intersect
-                        if (isect.t < closestS) { // it is the closest yet
+                        if (isect.t < closestT) { // it is the closest yet
                             closestT = isect.t; // record closest t yet
                             c = shadeIsect(isect,s,inputLights,inputSpheres); 
                         } // end if closest yet
@@ -762,7 +760,6 @@ function rayCastSpheres(context) {
                 {
                     for (var num_tri=0; num_tri<inputTriangles[s].triangles.length; num_tri++) 
                     {
-
                     	//console.log("Triangle:"+s);
                         tri_isect = rayTriangleIntersect([Eye, Dir], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][0]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][1]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][2]],1); 
                         if (tri_isect.exists) // there is an intersect
@@ -776,7 +773,6 @@ function rayCastSpheres(context) {
                     }
                 } // end for spheres
 
-                if
 
                 drawPixel(imagedata,x,y,c);
                 wx += wxd; 
