@@ -656,7 +656,7 @@ function shadeTriIsect(isect,isectSphere,lights,triangles,spheres) {
                 if((Math.sqrt(Math.pow(randomX,2)+Math.pow(randomY,2)+Math.pow(randomZ,2)) <= 1) && Vector.dot(N,randomPixel)>0)
                 {
                     randomPixel = Vector.normalize(randomPixel);
-                    n = spheres.length();    
+                    n = spheres.length;    
                     for (var integral_s=0; integral_s<n; integral_s++) 
                     {
                 
