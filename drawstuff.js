@@ -77,7 +77,16 @@ class Vector {
     toConsole(prefix) {
         console.log(prefix+"["+this.x+","+this.y+","+this.z+"]");
     } // end to console
-    
+
+
+
+
+    //A = [a1, a2, a3] and B = [b1, b2, b3]
+    //cross(A, B) = [ a2 * b3 - a3 * b2, a3 * b1 - a1 * b3, a1 * b2 - a2 * b1 ]
+    static cross(v1,v2) {
+    return (new Vector(v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x));
+    }
+
     // static dot method
     static dot(v1,v2) {
         try {
@@ -253,9 +262,16 @@ function raySphereIntersect(ray,sphere,clipVal) {
             throw "RaySphereIntersect: badly formatted ray";
         else { // valid params
             var a = Vector.dot(ray[1],ray[1]); // dot(D,D)
+
             var origMctr = Vector.subtract(ray[0],new Vector(sphere.x,sphere.y,sphere.z)); // E-C
+
             var b = 2 * Vector.dot(ray[1],origMctr); // 2 * dot(D,E-C)
             var c = Vector.dot(origMctr,origMctr) - sphere.r*sphere.r; // dot(E-C,E-C) - r^2
+
+
+            // Ray-Sphere intersection equation and solution.
+            // t = -(d*v)+-sqrt((d*v)^2-v^2+r^2)
+
             // if (clipVal == 0) {
             //     ray[0].toConsole("ray.orig: ");
             //     ray[1].toConsole("ray.dir: ");
@@ -263,6 +279,7 @@ function raySphereIntersect(ray,sphere,clipVal) {
             // } // end debug case
         
             var qsolve = solveQuad(a,b,c);
+
             if (qsolve.length == 0) 
                 throw "no intersection";
             else if (qsolve.length == 1) { 
@@ -297,7 +314,37 @@ function raySphereIntersect(ray,sphere,clipVal) {
         return({"exists": false, "xyz": NaN, "t": NaN});
     }
 } // end raySphereIntersect
-    
+
+function rayTriangleIntersect(ray,a,b,c,clipVal)
+{
+	a = new Vector(a[0],a[1],a[2]);
+	b= new Vector(b[0],b[1],b[2]);
+	c = new Vector(c[0],c[1],c[2]);
+	var ab = Vector.subtract(b,a);
+	var ac = Vector.subtract(c,a);
+	var normal = Vector.normalize(Vector.cross(ab,ac)); // get the plane of triangle
+
+	var t = Vector.dot(normal,Vector.subtract(a,origin))/Vector.dot(normal,ray);	//normal.dot(a.subtract(origin)) / normal.dot(ray);
+
+	if (t > 0)
+	{
+		var hit = Vector.add(origin,Vector.scale(t,ray));//origin.add(ray.multiply(t));
+		var toHit = Vector.subtract(hit,a);//hit.subtract(a);
+		var dot00 = Vector.dot(ac,ac);//ac.dot(ac);
+		var dot01 = Vector.dot(ac,ab);//ac.dot(ab);
+		var dot02 = Vector.dot(ac,toHit);//ac.dot(toHit);
+		var dot11 = Vector.dot(ab,ab);//ab.dot(ab);
+		var dot12 = Vector.dot(ab,toHit);//ab.dot(toHit);
+		var divide = dot00 * dot11 - dot01 * dot01;
+		var u = (dot11 * dot02 - dot01 * dot12) / divide;
+		var v = (dot00 * dot12 - dot01 * dot02) / divide;
+		if (u >= 0 && v >= 0 && u + v <= 1) return ({"exists": true, "xyz": hit,"t": t});
+  	}
+
+  return({"exists": false, "xyz": NaN, "t": NaN});
+
+}
+
 // draw a pixel at x,y using color
 function drawPixel(imagedata,x,y,color) {
     try {
