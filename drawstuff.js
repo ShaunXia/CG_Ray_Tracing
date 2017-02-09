@@ -679,7 +679,7 @@ function shadeTriIsect(isect,isectSphere,lights,triangles,spheres) {
                             { // it is the closest yet
                                 closestT = intergral_tri_isect.t; // record closest t yet
                                 // console.log(triangles[s]);
-                                integral_c = shadeTriIsect(integral_tri_isect,num_tri,inputLights,triangles[s],spheres); 
+                                integral_c = shadeTriIsect(integral_tri_isect,num_tri,lights,triangles[s],spheres); 
                                 // console.log(integral_c);
                             } // end if closest yet
                     }
