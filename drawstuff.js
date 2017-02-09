@@ -578,10 +578,144 @@ function shadeIsect(isect,isectSphere,lights,spheres) {
     }
 }
 
+
+// color the passed intersection and triangle
+function shadeTriIsect(isect,isectSphere,lights,triangles,spheres) {
+    try {
+        if (   !(isect instanceof Object) || !(typeof(isectSphere) === "number") 
+            || !(lights instanceof Array) || !(triangles instanceof Object))
+            throw "shadeIsect: bad parameter passed";
+        else {
+            var c = new Color(0,0,0,255); // init the sphere color to black
+            // var triangles = triangles[isectSphere]; // sphere intersected by eye
+
+            // add light for each source
+            var lightOccluded = false; // if an occluder is found
+            var Lloc = new Vector(0,0,0);
+            for (var l=0; l<lights.length; l++) {
+
+                // add in the ambient light
+                c[0] += lights[l].ambient[0] * triangles.material.ambient[0]; // ambient term r
+                c[1] += lights[l].ambient[1] * triangles.material.ambient[1]; // ambient term g
+                c[2] += lights[l].ambient[2] * triangles.material.ambient[2]; // ambient term b
+                
+            console.log(isect.xyz);
+                // check each other sphere to see if it occludes light
+                Lloc.set(0.5,1,-0.5);
+                // Lloc.set(lights[l].x,lights[l].y,lights[l].z);
+                var L = Vector.subtract(Lloc,isect.xyz); // light vector unnorm'd
+                // L.toConsole("L: ");
+                // console.log("isect: "+isect.xyz.x+", "+isect.xyz.y+", "+isect.xyz.z);
+                
+                // if light isn't occluded
+                if (!isLightOccluded(L,isect.xyz,1,spheres,false)) {
+                    // console.log("no occlusion found");
+                    
+                    // add in the diffuse light
+                     // var sphereCenter = new Vector(sphere.x,sphere.y,sphere.z);
+                    var N = new Vector(triangles.normals[isectSphere][0],triangles.normals[isectSphere][1],triangles.normals[isectSphere][2]); // surface normal
+                    var diffFactor = Math.max(0,Vector.dot(N,Vector.normalize(L)));
+                    if (diffFactor > 0) {
+                        c[0] += lights[l].diffuse[0] * triangles.material.diffuse[0] * diffFactor;
+                        c[1] += lights[l].diffuse[1] * triangles.material.diffuse[1] * diffFactor;
+                        c[2] += lights[l].diffuse[2] * triangles.material.diffuse[2] * diffFactor;
+                    } // end nonzero diffuse factor
+
+                    // add in the specular light
+                    var V = Vector.normalize(Vector.subtract(Eye,isect.xyz)); // view vector
+                    var H = Vector.normalize(Vector.add(L,V)); // half vector
+                    var specFactor = Math.max(0,Vector.dot(N,H)); 
+                    if (specFactor > 0) {
+                        var newSpecFactor = specFactor;
+                        for (var s=1; s<triangles.material.n; s++) // mult by itself if needed
+                            newSpecFactor *= specFactor;
+                        c[0] += lights[l].specular[0] * triangles.material.specular[0] * newSpecFactor; // specular term
+                        c[1] += lights[l].specular[1] * triangles.material.specular[1] * newSpecFactor; // specular term
+                        c[2] += lights[l].specular[2] * triangles.material.specular[2] * newSpecFactor; // specular term
+                    } // end nonzero specular factor
+                    
+                } // end if light not occluded
+            } // end for lights
+            
+
+            var integral_c = new Color(0,0,0,255);
+            var closestT = Number.MAX_VALUE; // init the closest t value
+            var integral_isect = {};
+            var integral_tri_isect = {};
+
+            var i = 0;
+            while(i != 100)
+            {
+                // Assume a hemisphere of radius 1 ... hence, a cube of side 2
+                var randomX = Math.random()*2-1;
+                var randomY = Math.random()*2-1;
+                var randomZ = Math.random()*2-1; 
+                var randomPixel = new Vector(randomX, randomY, randomZ);
+                if((Math.sqrt(Math.pow(randomX,2)+Math.pow(randomY,2)+Math.pow(randomZ,2)) <= 1) && Vector.dot(N,randomPixel)>0)
+                {
+                    randomPixel = Vector.normalize(randomPixel);
+                    n = spheres.length();    
+                    for (var integral_s=0; integral_s<n; integral_s++) 
+                    {
+                
+                        integral_isect = raySphereIntersect([isect.xyz,randomPixel],spheres[s],1); 
+                        // console.log(isect);
+                        if (integral_isect.exists) // there is an intersect
+                            if (integral_isect.t < closestT) { // it is the closest yet
+                                closestT = integral_isect.t; // record closest t yet
+                                integral_c = shadeIsect(integral_isect,integral_s,inputLights,inputSpheres); 
+                            } // end if closest yet
+                    } // end for spheres
+
+                for (var s=0; s<inputTriangles.length-1; s++) 
+                {
+                    for (var num_tri=0; num_tri<inputTriangles[s].triangles.length; num_tri++) 
+                    {
+                        integral_tri_isect = rayTriangleIntersect(Eye, Dir, inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][0]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][1]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][2]]); 
+                        if (integral_tri_isect.exists) // there is an intersect
+                            if (integral_tri_isect.t < closestT) 
+                            { // it is the closest yet
+                                closestT = intergral_tri_isect.t; // record closest t yet
+                                // console.log(inputTriangles[s]);
+                                integral_c = shadeTriIsect(integral_tri_isect,num_tri,inputLights,inputTriangles[s],inputSpheres); 
+                                // console.log(integral_c);
+                            } // end if closest yet
+                    }
+                } // end for spheres
+
+                integral_c = Vector.dot(randomPixel,N)*
+
+                    i++;
+                } 
+                
+                else 
+                    continue; // reject sample
+                }
+            
+            c[0] += integral_c[0]; // clamp max value to 1
+            c[1] += integral_c[1]; // clamp max value to 1
+            c[2] += integral_c[2]; // clamp max value to 1
+
+            c[0] = 255 * Math.min(1,c[0]); // clamp max value to 1
+            c[1] = 255 * Math.min(1,c[1]); // clamp max value to 1
+            c[2] = 255 * Math.min(1,c[2]); // clamp max value to 1
+            
+            return(c);
+        } // if have good params
+    } // end throw
+    
+    catch(e) {
+        console.log(e);
+        return(Object.null);
+    }
+} // end shade triIsect
+
 // use ray casting with spheres to get pixel colors
 function rayCastSpheres(context) {
     var inputSpheres = getJSONFile(INPUT_SPHERES_URL,"spheres");
     var inputLights = getJSONFile(INPUT_LIGHTS_URL,"lights");
+    var inputTriangles = getJSONFile(INPUT_TRIANGLES_URL,"triangles");
+
     var w = context.canvas.width;
     var h = context.canvas.height;
     var imagedata = context.createImageData(w,h);
@@ -617,6 +751,26 @@ function rayCastSpheres(context) {
                             c = shadeIsect(isect,s,inputLights,inputSpheres); 
                         } // end if closest yet
                 } // end for spheres
+
+
+
+                for (var s=0; s<inputTriangles.length-1; s++) 
+                {
+                    for (var num_tri=0; num_tri<inputTriangles[s].triangles.length; num_tri++) 
+                    {
+                        tri_isect = rayTriangleIntersect(Eye, Dir, inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][0]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][1]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][2]]); 
+                        if (tri_isect.exists) // there is an intersect
+                            if (tri_isect.t < closestT) 
+                            { // it is the closest yet
+                                closestT = tri_isect.t; // record closest t yet
+                                // console.log(inputTriangles[s]);
+                                c = shadeTriIsect(tri_isect,num_tri,inputLights,inputTriangles[s],inputSpheres); 
+                                console.log(c);
+                            } // end if closest yet
+                    }
+                } // end for spheres
+
+                
                 drawPixel(imagedata,x,y,c);
                 wx += wxd; 
                 //console.log(""); // blank per pixel
@@ -722,7 +876,11 @@ const INPUT_SPHERES_URL =
 const INPUT_LIGHTS_URL = 
     "https://pages.github.ncsu.edu/sxia4/cg/lights.json";
     //"https://pages.github.ncsu.edu/bwatson/introcg-prog1/lights.json";
-        
+
+const INPUT_TRIANGLES_URL = 
+    "https://pages.github.ncsu.edu/sxia4/cg/triangles.json";
+    //"https://pages.github.ncsu.edu/bwatson/introcg-prog1/lights.json";
+
 var Eye = new Vector(0.5,0.5,-0.5); // set the eye position
 
 
