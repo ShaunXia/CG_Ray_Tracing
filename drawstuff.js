@@ -873,7 +873,7 @@ const WIN_Z = 0;
 const WIN_LEFT = 0; const WIN_RIGHT = 1;
 const WIN_BOTTOM = 0; const WIN_TOP = 1; 
 const INPUT_SPHERES_URL = 
-    "https://pages.github.ncsu.edu/sxia4/cg/spheres.json";
+    "https://pages.github.ncsu.edu/sxia4/cg/spheres_new.json";
     //"https://pages.github.ncsu.edu/bwatson/introcg-prog1/spheres.json";
 const INPUT_LIGHTS_URL = 
     "https://pages.github.ncsu.edu/sxia4/cg/lights.json";
