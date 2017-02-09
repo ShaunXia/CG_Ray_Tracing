@@ -669,17 +669,17 @@ function shadeTriIsect(isect,isectSphere,lights,triangles,spheres) {
                             } // end if closest yet
                     } // end for spheres
 
-                for (var s=0; s<inputTriangles.length-1; s++) 
+                for (var s=0; s<triangles.length; s++) 
                 {
-                    for (var num_tri=0; num_tri<inputTriangles[s].triangles.length; num_tri++) 
+                    for (var num_tri=0; num_tri<triangles[s].triangles.length; num_tri++) 
                     {
-                        integral_tri_isect = rayTriangleIntersect([Eye, Dir], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][0]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][1]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][2]],1); 
+                        integral_tri_isect = rayTriangleIntersect([Eye, Dir], triangles[s].vertices[triangles[s].triangles[num_tri][0]], triangles[s].vertices[triangles[s].triangles[num_tri][1]], triangles[s].vertices[triangles[s].triangles[num_tri][2]],1); 
                         if (integral_tri_isect.exists) // there is an intersect
                             if (integral_tri_isect.t < closestT) 
                             { // it is the closest yet
                                 closestT = intergral_tri_isect.t; // record closest t yet
-                                // console.log(inputTriangles[s]);
-                                integral_c = shadeTriIsect(integral_tri_isect,num_tri,inputLights,inputTriangles[s],inputSpheres); 
+                                // console.log(triangles[s]);
+                                integral_c = shadeTriIsect(integral_tri_isect,num_tri,inputLights,triangles[s],spheres); 
                                 // console.log(integral_c);
                             } // end if closest yet
                     }
