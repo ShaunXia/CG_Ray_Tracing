@@ -645,54 +645,54 @@ function shadeTriIsect(isect,isectSphere,lights,triangles,spheres) {
             var integral_isect = {};
             var integral_tri_isect = {};
 
-            var i = 0;
-            while(i != 100)
-            {
-                // Assume a hemisphere of radius 1 ... hence, a cube of side 2
-                var randomX = Math.random()*2-1;
-                var randomY = Math.random()*2-1;
-                var randomZ = Math.random()*2-1; 
-                var randomPixel = new Vector(randomX, randomY, randomZ);
-                if((Math.sqrt(Math.pow(randomX,2)+Math.pow(randomY,2)+Math.pow(randomZ,2)) <= 1) && Vector.dot(N,randomPixel)>0)
-                {
-                    randomPixel = Vector.normalize(randomPixel);
-                    n = spheres.length;    
-                    for (var integral_s=0; integral_s<n; integral_s++) 
-                    {
+            // var i = 0;
+            // while(i != 100)
+            // {
+            //     // Assume a hemisphere of radius 1 ... hence, a cube of side 2
+            //     var randomX = Math.random()*2-1;
+            //     var randomY = Math.random()*2-1;
+            //     var randomZ = Math.random()*2-1; 
+            //     var randomPixel = new Vector(randomX, randomY, randomZ);
+            //     if((Math.sqrt(Math.pow(randomX,2)+Math.pow(randomY,2)+Math.pow(randomZ,2)) <= 1) && Vector.dot(N,randomPixel)>0)
+            //     {
+            //         randomPixel = Vector.normalize(randomPixel);
+            //         n = spheres.length;    
+            //         for (var integral_s=0; integral_s<n; integral_s++) 
+            //         {
                 
-                        integral_isect = raySphereIntersect([isect.xyz,randomPixel],spheres[s],1); 
-                        // console.log(isect);
-                        if (integral_isect.exists) // there is an intersect
-                            if (integral_isect.t < closestT) { // it is the closest yet
-                                closestT = integral_isect.t; // record closest t yet
-                                integral_c = shadeIsect(integral_isect,integral_s,lights,spheres); 
-                            } // end if closest yet
-                    } // end for spheres
+            //             integral_isect = raySphereIntersect([isect.xyz,randomPixel],spheres[s],1); 
+            //             // console.log(isect);
+            //             if (integral_isect.exists) // there is an intersect
+            //                 if (integral_isect.t < closestT) { // it is the closest yet
+            //                     closestT = integral_isect.t; // record closest t yet
+            //                     integral_c = shadeIsect(integral_isect,integral_s,lights,spheres); 
+            //                 } // end if closest yet
+            //         } // end for spheres
 
-                for (var s=0; s<triangles.length; s++) 
-                {
-                    for (var num_tri=0; num_tri<triangles[s].triangles.length; num_tri++) 
-                    {
-                        integral_tri_isect = rayTriangleIntersect([Eye, Dir], triangles[s].vertices[triangles[s].triangles[num_tri][0]], triangles[s].vertices[triangles[s].triangles[num_tri][1]], triangles[s].vertices[triangles[s].triangles[num_tri][2]],1); 
-                        if (integral_tri_isect.exists) // there is an intersect
-                            if (integral_tri_isect.t < closestT) 
-                            { // it is the closest yet
-                                closestT = intergral_tri_isect.t; // record closest t yet
-                                // console.log(triangles[s]);
-                                integral_c = shadeTriIsect(integral_tri_isect,num_tri,lights,triangles[s],spheres); 
-                                // console.log(integral_c);
-                            } // end if closest yet
-                    }
-                } // end for spheres
+            //     for (var s=0; s<triangles.length; s++) 
+            //     {
+            //         for (var num_tri=0; num_tri<triangles[s].triangles.length; num_tri++) 
+            //         {
+            //             integral_tri_isect = rayTriangleIntersect([Eye, Dir], triangles[s].vertices[triangles[s].triangles[num_tri][0]], triangles[s].vertices[triangles[s].triangles[num_tri][1]], triangles[s].vertices[triangles[s].triangles[num_tri][2]],1); 
+            //             if (integral_tri_isect.exists) // there is an intersect
+            //                 if (integral_tri_isect.t < closestT) 
+            //                 { // it is the closest yet
+            //                     closestT = intergral_tri_isect.t; // record closest t yet
+            //                     // console.log(triangles[s]);
+            //                     integral_c = shadeTriIsect(integral_tri_isect,num_tri,lights,triangles[s],spheres); 
+            //                     // console.log(integral_c);
+            //                 } // end if closest yet
+            //         }
+            //     } // end for spheres
 
-                integral_c = Vector.dot(randomPixel,N)*
+            //     integral_c = Vector.dot(randomPixel,N)*
 
-                    i++;
-                } 
+            //         i++;
+            //     } 
                 
-                else 
-                    continue; // reject sample
-                }
+            //     else 
+            //         continue; // reject sample
+            //     }
             
             c[0] += integral_c[0]; // clamp max value to 1
             c[1] += integral_c[1]; // clamp max value to 1
