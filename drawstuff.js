@@ -14,7 +14,7 @@ class Color {
                 this[0] = r; this[1] = g; this[2] = b; this[3] = a;
             }
         } // end try
-        
+
         catch (e) {
             console.log(e);
         }
@@ -615,7 +615,18 @@ function shadeTriIsect(isect,isectSphere,lights,triangles,spheres) {
 
                     // add in the diffuse light
                      // var sphereCenter = new Vector(sphere.x,sphere.y,sphere.z);
-                    var N = new Vector(triangles.normals[isectSphere][0],triangles.normals[isectSphere][1],triangles.normals[isectSphere][2]); // surface normal
+
+                    a = new Vector(triangles[isectSphere].vertices[0][0],triangles[isectSphere].vertices[0][1],triangles[isectSphere].vertices[0][2]);
+                   	b= new Vector(triangles[isectSphere].vertices[1][0],triangles[isectSphere].vertices[1][1],triangles[isectSphere].vertices[1][2]);
+                   	c = new Vector(triangles[isectSphere].vertices[2][0],triangles[isectSphere].vertices[2][1],triangles[isectSphere].vertices[2][2]);
+                   	var ab = Vector.subtract(b,a);
+                   	var ac = Vector.subtract(c,a);
+                   	var N = Vector.normalize(Vector.cross(ab,ac));
+
+
+                    //var N = new Vector(triangles.normals[isectSphere][0],triangles.normals[isectSphere][1],triangles.normals[isectSphere][2]); // surface normal
+
+
                     var diffFactor = Math.max(0,Vector.dot(N,Vector.normalize(L)));
                     if (diffFactor > 0) {
                         c[0] += lights[l].diffuse[0] * triangles.material.diffuse[0] * diffFactor;
