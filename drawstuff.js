@@ -615,16 +615,8 @@ function shadeTriIsect(isect,isectSphere,lights,triangles,spheres) {
                     
                     // add in the diffuse light
                      // var sphereCenter = new Vector(sphere.x,sphere.y,sphere.z);
-                     
-
-                    var ab = Vector.subtract(triangles.vertices[0],triangles.vertices[1]);
-                    var ac = Vector.subtract(triangles.vertices[0],triangles.vertices[2]);
-                    var normal = Vector.cross(ab,ac); // get the plane of triangle
-
-                   // var N = new Vector(triangles.normals[isectSphere][0],triangles.normals[isectSphere][1],triangles.normals[isectSphere][2]); // surface normal
-                    
-                    var diffFactor = Math.max(0,Vector.dot(normal,Vector.normalize(L)));
-                   
+                    var N = new Vector(triangles.normals[isectSphere][0],triangles.normals[isectSphere][1],triangles.normals[isectSphere][2]); // surface normal
+                    var diffFactor = Math.max(0,Vector.dot(N,Vector.normalize(L)));
                     if (diffFactor > 0) {
                         c[0] += lights[l].diffuse[0] * triangles.material.diffuse[0] * diffFactor;
                         c[1] += lights[l].diffuse[1] * triangles.material.diffuse[1] * diffFactor;
@@ -768,18 +760,20 @@ function rayCastSpheres(context) {
 
                 for (var s=0; s<inputTriangles.length; s++) 
                 {
+                    for (var num_tri=0; num_tri<inputTriangles[s].triangles.length; num_tri++) 
+                    {
 
                     	//console.log("Triangle:"+s);
-                        tri_isect = rayTriangleIntersect([Eye, Dir], inputTriangles[s].vertices[0], inputTriangles[s].vertices[1], inputTriangles[s].vertices[2],1); 
+                        tri_isect = rayTriangleIntersect([Eye, Dir], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][0]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][1]], inputTriangles[s].vertices[inputTriangles[s].triangles[num_tri][2]],1); 
                         if (tri_isect.exists) // there is an intersect
                             if (tri_isect.t < closestT) 
                             { // it is the closest yet
                                 closestT = tri_isect.t; // record closest t yet
                                 // console.log(inputTriangles[s]);
-                                c = shadeTriIsect(tri_isect,s,inputLights,inputTriangles[s],inputSpheres); 
+                                c = shadeTriIsect(tri_isect,num_tri,inputLights,inputTriangles[s],inputSpheres); 
                                 //console.log(c);
                             } // end if closest yet
-
+                    }
                 } // end for spheres
 
                 if
