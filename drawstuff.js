@@ -1,3 +1,4 @@
+
 /* classes */
 
 // Color class
@@ -199,6 +200,7 @@ function randPermutation(n) {
 
 // get the JSON file from the passed URL
 function getJSONFile(url,descr) {
+
     try {
         if ((typeof(url) !== "string") || (typeof(descr) !== "string"))
             throw "getJSONFile: parameter not a string";
@@ -770,7 +772,7 @@ function rayCastSpheres(context) {
                 for (var s=0; s<inputTriangles.length; s++)
                 {
                     	//console.log("Triangle:"+s);
-                        tri_isect = rayTriangleIntersect([Eye, Dir], inputTriangles[s].vertices[0], inputTriangles[s].vertices[1], inputTriangles[s].vertices[2],1);
+                        tri_isect = rayTriangleIntersect([Eye, Dir], inputTriangles[s].vertices[][0], inputTriangles[s].vertices[][1], inputTriangles[s].vertices[][2],1);
                         if (tri_isect.exists) // there is an intersect
                             if (tri_isect.t < closestT)
                             { // it is the closest yet
