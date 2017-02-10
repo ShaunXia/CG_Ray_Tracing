@@ -624,7 +624,7 @@ function shadeTriIsect(isect,isectSphere,lights,triangles,spheres) {
                    	var N = Vector.normalize(Vector.cross(ab,ac));
 
 
-                    /／var N = new Vector(triangles.normals[0][0],triangles.normals[0][1],triangles.normals[0][2]); // surface normal
+                    //var N = new Vector(triangles.normals[0][0],triangles.normals[0][1],triangles.normals[0][2]); // surface normal
 
 
                     var diffFactor = Math.max(0,Vector.dot(N,Vector.normalize(L)));
