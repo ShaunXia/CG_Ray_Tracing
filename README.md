@@ -20,6 +20,10 @@ Also I have hard coded my json and js files with my github links in htmls, not i
 
 There're some other result images when I wrote this project in result folder.
 
+Also, you can direct visit my github page.
+
+[https://pages.github.ncsu.edu/sxia4/cg/points_list.htm][9]
+
 ---
 ### Finished Points:
 **Part 0: Properly turned in assignment**
@@ -72,3 +76,4 @@ a litter brighter than without specular.
   [6]: https://pages.github.ncsu.edu/sxia4/cg/result/100Sample_only_add_with_spec_russian0.5.png
   [7]: https://pages.github.ncsu.edu/sxia4/cg/result/mul_light.png
   [8]: https://pages.github.ncsu.edu/sxia4/cg/result/100Sample_only_add_with_spec.png
+  [9]: https://pages.github.ncsu.edu/sxia4/cg/points_list.htm
