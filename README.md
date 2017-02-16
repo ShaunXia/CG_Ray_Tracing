@@ -21,7 +21,7 @@ Also I have hard coded my json and js files with my github links in htmls, not i
 There're some other result images when I wrote this project in result folder.
 
 ---
-### Completed Points:
+### Finished Points:
 **Part 0: Properly turned in assignment**
 
 **Part 1: Add a colored Cornell box, and intersect triangles**
