@@ -720,9 +720,13 @@ function indirIllum(isect,lev)
 
     //var diffFactor = Math.max(0,Vector.dot(N,Vector.normalize(L)));
 
-    estRadiance[0] +=  Math.min(1,indirC[0]*sampleTheta[i]); // clamp max value to 1
-    estRadiance[1] +=  Math.min(1,indirC[1]*sampleTheta[i]); // clamp max value to 1
-    estRadiance[2] +=  Math.min(1,indirC[2]*sampleTheta[i]); // clamp max value to 1
+    estRadiance[0] +=  Math.min(1,indirC[0]); // clamp max value to 1
+    estRadiance[1] +=  Math.min(1,indirC[1]); // clamp max value to 1
+    estRadiance[2] +=  Math.min(1,indirC[2]); // clamp max value to 1
+
+    // estRadiance[0] +=  Math.min(1,indirC[0]*sampleTheta[i]); // clamp max value to 1
+    // estRadiance[1] +=  Math.min(1,indirC[1]*sampleTheta[i]); // clamp max value to 1
+    // estRadiance[2] +=  Math.min(1,indirC[2]*sampleTheta[i]); // clamp max value to 1
 
 	}
 	//sampleNum*=p_bounce;
