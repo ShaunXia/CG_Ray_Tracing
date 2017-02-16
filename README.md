@@ -51,7 +51,8 @@ There're some other result images when I wrote this project in result folder.
 
 ![6][6]
 
-Extra Points:
+
+### Extra Points:
 **1% Add multiple lights, and weigh their light appropriately**
 Add another light in [0.5,0,0.5]
 
