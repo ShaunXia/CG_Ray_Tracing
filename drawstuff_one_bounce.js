@@ -640,18 +640,12 @@ function radiance(ray,lights,spheres,triangles,lev,brdf,russian_flag=0)
 	var c = new Color(0,0,0,255);
     if (isect.exists) {
 		var dir_color=dirIllum(isect,lights,brdf);
-		if (russian_flag==0) {
     	var indir_color = indirIllum(isect,lev);
 		c[0]=dir_color[0]+indir_color[0];
 		c[1]=dir_color[1]+indir_color[1];
 		c[2]=dir_color[2]+indir_color[2];
     	return (c);
-    	}else
-    	{
-    		c[0]=dir_color[0];
-			c[1]=dir_color[1];
-			c[2]=dir_color[2];
-    	}
+    	
     }
 
     // no intersection
@@ -877,7 +871,7 @@ function shadeIsect(isect,hitID,lights,spheres,lev,brdf) {
                     var V = Vector.normalize(Vector.subtract(Eye,isect.xyz)); // view vector
                     var H = Vector.normalize(Vector.add(L,V)); // half vector
                     var specFactor = Math.max(0,Vector.dot(N,H)); 
-                    if (specFactor > 0) {
+                    if (specFactor > 0&&brdf==0) {
                         var newSpecFactor = specFactor;
                         for (var s=1; s<spheres[hitID].n; s++) // mult by itself if needed
                             newSpecFactor *= specFactor;
@@ -952,7 +946,7 @@ function shadeTriIsect(isect,isectSphere,lights,triangles,spheres,lev,brdf) {
                     var V = Vector.normalize(Vector.subtract(Eye,isect.xyz)); // view vector
                     var H = Vector.normalize(Vector.add(L,V)); // half vector
                     var specFactor = Math.max(0,Vector.dot(N,H)); 
-                    if (specFactor > 0) {
+                    if (specFactor > 0&&brdf==0) {
                         var newSpecFactor = specFactor;
                         for (var s=1; s<triangles.material.n; s++) // mult by itself if needed
                             newSpecFactor *= specFactor;

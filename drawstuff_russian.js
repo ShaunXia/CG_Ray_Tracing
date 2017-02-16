@@ -641,7 +641,7 @@ function radiance(ray,lights,spheres,triangles,lev,brdf,russian_flag=0)
     if (isect.exists) {
 		var dir_color=dirIllum(isect,lights,brdf);
 		if (russian_flag==0) {
-    	var indir_color = indirIllum(isect,lev);
+    	var indir_color = indirIllumWithRussian(isect,lev);
 		c[0]=dir_color[0]+indir_color[0];
 		c[1]=dir_color[1]+indir_color[1];
 		c[2]=dir_color[2]+indir_color[2];
@@ -680,10 +680,10 @@ function indirIllum(isect,lev)
 	var sampleNum=100;
 	var indirC = new Color(0,0,0,255); 
 	var estRadiance=new Color(0,0,0,255); 
-	// var p_bounce=0.5
-	// if (Math.random()>p_bounce) {return(estRadiance);}
+	var p_bounce=0.5
+	if (Math.random()>p_bounce) {return(estRadiance);}
 
-	if (lev>1) {return(estRadiance);}
+	// if (lev>1) {return(estRadiance);}
 
     var smaplePoint=[];
     var sampleTheta=[];
@@ -722,13 +722,21 @@ function indirIllum(isect,lev)
 	for (var i = 0; i < smaplePoint.length; i++)
 	{
 
-    indirC = radiance([isect.xyz,smaplePoint[i]],inputLights,inputSpheres,inputTriangles,lev+1,brdf,0);
+		// var r1=Math.random();
+		// var r2=Math.random();
+		// var sinTheta = Math.sqrt(1 - r1*r1);
+		// var phi = 2 * 3.14 * r2;
+		// var x = sinTheta * Math.cos(phi);
+		// var z = sinTheta * Math.sin(phi);
+		// var sample = new Vector(x,r1,z);
+
+    indirC = radiance([isect.xyz,smaplePoint[i]],inputLights,inputSpheres,inputTriangles,lev+1,brdf,1);
 
     //var diffFactor = Math.max(0,Vector.dot(N,Vector.normalize(L)));
 
-    estRadiance[0] +=  Math.min(1,indirC[0]*sampleTheta[i]); // clamp max value to 1
-    estRadiance[1] +=  Math.min(1,indirC[1]*sampleTheta[i]); // clamp max value to 1
-    estRadiance[2] +=  Math.min(1,indirC[2]*sampleTheta[i]); // clamp max value to 1
+    estRadiance[0] +=  Math.min(1,indirC[0]); // clamp max value to 1
+    estRadiance[1] +=  Math.min(1,indirC[1]); // clamp max value to 1
+    estRadiance[2] +=  Math.min(1,indirC[2]); // clamp max value to 1
 
 	}
 	//sampleNum*=p_bounce;

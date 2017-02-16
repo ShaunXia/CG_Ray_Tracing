@@ -640,18 +640,7 @@ function radiance(ray,lights,spheres,triangles,lev,brdf,russian_flag=0)
 	var c = new Color(0,0,0,255);
     if (isect.exists) {
 		var dir_color=dirIllum(isect,lights,brdf);
-		if (russian_flag==0) {
-    	var indir_color = indirIllum(isect,lev);
-		c[0]=dir_color[0]+indir_color[0];
-		c[1]=dir_color[1]+indir_color[1];
-		c[2]=dir_color[2]+indir_color[2];
-    	return (c);
-    	}else
-    	{
-    		c[0]=dir_color[0];
-			c[1]=dir_color[1];
-			c[2]=dir_color[2];
-    	}
+		return(dir_color);
     }
 
     // no intersection
